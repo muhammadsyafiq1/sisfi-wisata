@@ -30,13 +30,21 @@
                     alt="user" 
                     class="rounded-circle mr-2 profile-picture"
                     />
-                    Hi, Syafiq
+                    Hi, {{Auth::user()->name}}
                 </a>
                 <div class="dropdown-menu">
                     <a href="dashboard.html" class="dropdown-item">Dashboard</a>
                     <a href="dashboard-account.html" class="dropdown-item">Setting</a>
                     <div class="dropdown-divider"></div>
-                    <a href="/" class="dropdown-item">Logout</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </div>
             </li>
         </ul>
@@ -44,13 +52,19 @@
         <ul class="navbar-nav d-block d-lg-none">
             <li class="nav-item">
                 <a href="#" class="nav-link">
-                    Hi, Syafiq
+                    Hi, {{Auth::user()->name}}
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link d-inline">
-                    Cart
+                <a class="nav-link d-inline" href="{{ route('logout') }}"
+                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
                 </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
             </li>
         </ul>
         </div>

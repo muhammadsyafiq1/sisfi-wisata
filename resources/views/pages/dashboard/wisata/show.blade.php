@@ -12,6 +12,25 @@
             <p class="dashboard-subtitle">
                 Detail wisata
             </p>
+            <div class="row">
+                <div class="col-12">
+                    <form action="{{route('wisata.destroy',$data->id)}}" method="post">
+                        @csrf @method('delete')
+                        <button class=" mb-3 btn btn-sm btn-circle btn-danger" onClick="return confirm('Yakin ingin hapus wisata - {{$data->title}} ? ')" >
+                            Hapus Wisata
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="row mb-2 mt-2">
+                <div class="col-12">
+                    @if(session('status'))
+                        <div class="alert alert-success text-center">
+                            {{session('status')}}
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
         <!-- section content -->
         <div class="dashboard-content">
@@ -110,11 +129,6 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        @if(session('status'))
-                            <div class="alert alert-success text-center">
-                                {{session('status')}}
-                            </div>
-                        @endif
                         <div class="card-body">
                             <div class="row">
                                 @foreach($data->gallery as $gallery)

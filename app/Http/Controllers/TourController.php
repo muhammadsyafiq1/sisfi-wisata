@@ -51,7 +51,7 @@ class TourController extends Controller
         $wisata->category_id = $request->category_id;
         $wisata->nomor_hp = $request->nomor_hp;
         $wisata->status = 'inactive';
-        $wisata->user_id = 1;
+        $wisata->user_id = \Auth::user()->id;
         $wisata->slug = \Str::slug($request->title);
         $wisata->save();
 
@@ -91,8 +91,20 @@ class TourController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all()); die;
-
+        $data = Tour::find($id);
+        $data->title = $request->title;
+        $data->biaya_masuk = $request->biaya_masuk;
+        $data->biaya_parkir = $request->biaya_parkir;
+        $data->deskripsi = $request->deskripsi;
+        $data->category_id = $request->category_id;
+        $data->nomor_hp = $request->nomor_hp;
+        $data->kota = $request->kota;
+        $data->alamat = $request->alamat;
+        $data->makanan_khas = $request->makanan_khas;
+        $data->featured = $request->featured;
+        $data->user_id = \Auth::user()->id;
+        $data->slug = \Str::slug($request->title);
+        $data->save();
         return redirect()->back()->with('status','berhasil edit wisata.');
     }
 
@@ -104,6 +116,8 @@ class TourController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data = Tour::find($id);
+        $data->delete();
+        return redirect(route('wisata.index'))->with('status','berhasil hapus wisata.');
     }
 }

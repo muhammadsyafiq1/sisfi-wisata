@@ -22,13 +22,22 @@
                     </a>
                 </div>
             </div>
+            @if(session('status'))
+            <div class="row mt-2">
+                <div class="col-12">
+                    <div class="alert alert-success text-center">
+                        {{session('status')}}
+                    </div>
+                </div>
+            </div>
+            @endif
             <div class="row mt-4">
                 @foreach($data as $d)
                     <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                         <a href="{{route('wisata.show',$d->id)}}" class="card card-dashboard-product d-block">
                             <div class="gallery-containerr">
                                 <div class="card-body">
-                                    <img src="{{Storage::url($d->gallery->first()->foto)}}" class="w-100 mb-2">
+                                    <img src="{{Storage::url($d->gallery->first()->foto ?? '')}}" class="w-100 mb-2">
                                     <div class="product-title">{{$d->title}}</div>
                                     <div class="product-subtitle">{{$d->category->nama_kategori}}</div>
                                     <small class="text-{{$d->status == 'active' ? 'success' : 'danger'}}" >{{$d->status}}</small>
