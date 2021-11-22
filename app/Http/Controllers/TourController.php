@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Tour;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 
 class TourController extends Controller
 {
@@ -16,7 +17,12 @@ class TourController extends Controller
      */
     public function index()
     {
-        $data = Tour::with('gallery','category')->get();
+        $user = Auth::user()->id;
+        if(Auth::user()->role == 'admin'){
+            $data = Tour::with('gallery','category')->orderBy('id','DESC')->get(); 
+        }else {
+            $data = Tour::with('gallery','category')->where('user_id', $user)->get();
+        }
         return view('pages.dashboard.wisata.index', compact('data'));
     }
 
@@ -51,7 +57,7 @@ class TourController extends Controller
         $wisata->category_id = $request->category_id;
         $wisata->nomor_hp = $request->nomor_hp;
         $wisata->status = 'inactive';
-        $wisata->user_id = \Auth::user()->id;
+        $wisata->user_id = Auth::user()->id;
         $wisata->slug = \Str::slug($request->title);
         $wisata->save();
 
@@ -102,7 +108,7 @@ class TourController extends Controller
         $data->alamat = $request->alamat;
         $data->makanan_khas = $request->makanan_khas;
         $data->featured = $request->featured;
-        $data->user_id = \Auth::user()->id;
+        $data->user_id = Auth::user()->id;
         $data->slug = \Str::slug($request->title);
         $data->save();
         return redirect()->back()->with('status','berhasil edit wisata.');
@@ -119,5 +125,30 @@ class TourController extends Controller
         $data = Tour::find($id);
         $data->delete();
         return redirect(route('wisata.index'))->with('status','berhasil hapus wisata.');
+    }
+
+    public function aktif ($id)
+    {
+        $data = Tour::find($id);
+        $data->status = 'aktif';
+        $data->save();
+        return redirect()->back()->with('status','wisata berhasil diaktifkan.');
+
+    }
+
+    public function tutup($id)
+    {
+        $data = Tour::find($id);
+        $data->is_open = 0;
+        $data->save();
+        return redirect()->back()->with('status','wisata berhasil ditutup.');
+    }
+
+    public function buka($id)
+    {
+        $data = Tour::find($id);
+        $data->is_open = 1;
+        $data->save();
+        return redirect()->back()->with('status','wisata berhasil dibuka.');
     }
 }

@@ -18,7 +18,7 @@ class CreateToursTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('biaya_masuk');
-            $table->string('deskripsi');
+            $table->text('deskripsi');
             $table->boolean('biaya_parkir');
             $table->string('negara')->default('indonesia');
             $table->string('kota');

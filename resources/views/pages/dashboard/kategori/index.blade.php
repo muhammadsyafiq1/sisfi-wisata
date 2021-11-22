@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="tb_category" class="table table-striped">
+                            <table id="table_id" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>Nama Kategori</th>

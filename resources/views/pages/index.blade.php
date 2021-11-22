@@ -9,19 +9,19 @@
         <section class="section-stats row justify-content-center" 
             id="stats">
             <div class="col-3 col-md-2 stats-detail">
-                <h2>20K</h2>
-                <P>Mmebers</P>
+                <h2>0</h2>
+                <P>Members</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">
-                <h2>3K</h2>
-                <P>Hotels</P>
+                <h2>{{$wisata}}</h2>
+                <P>Tours</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">
-                <h2>12K</h2>
+                <h2>{{$country}}</h2>
                 <P>Countries</P>
             </div>
             <div class="col-3 col-md-2 stats-detail">
-                <h2>72</h2>
+                <h2>{{$partners}}</h2>
                 <P>Partners</P>
             </div>
         </section>
@@ -48,54 +48,20 @@
         id="popularContent">
         <div class="container">
             <div class="row justify-content-center section-popular-travel">
+                @foreach($tours as $tour)
                 <div class="col-sm-6 col-md-4 col-lg-3">
                     <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/assets/images/logos/popular-1.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">DARATAN, BALI</div>
+                        style="background-image: url('{{Storage::url($tour->gallery->first()->foto)}}');">
+                        <div class="travel-country">{{$tour->title ?? 'not found'}}</div>
+                        <div class="travel-location">{{$tour->kota ?? 'not found'}}</div>
                         <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
+                            <a href="{{ route('detail',$tour->slug) }}" class="btn btn-travel-details px-4">
                                 View Details
                             </a>
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/assets/images/logos/popular-2.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">BROMO, MALANG</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/assets/images/logos/popular-3.jpg');">
-                        <div class="travel-country">INDONESIA</div>
-                        <div class="travel-location">NUSA, PENINDA</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3">
-                    <div class="card-travel text-center d-flex flex-column"
-                        style="background-image: url('/frontend/assets/images/logos/popular-4.jpg');">
-                        <div class="travel-country">UAE</div>
-                        <div class="travel-location">DUBAI</div>
-                        <div class="travel-button mt-auto">
-                            <a href="#" class="btn btn-travel-details px-4">
-                                View Details
-                            </a>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
         </div>
     </section>

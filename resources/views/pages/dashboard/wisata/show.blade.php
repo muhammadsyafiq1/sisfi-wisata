@@ -12,8 +12,8 @@
             <p class="dashboard-subtitle">
                 Detail wisata
             </p>
-            <div class="row">
-                <div class="col-12">
+            <div class="row d-flex justify-content-between container-fluid">
+                <div class="">
                     <form action="{{route('wisata.destroy',$data->id)}}" method="post">
                         @csrf @method('delete')
                         <button class=" mb-3 btn btn-sm btn-circle btn-danger" onClick="return confirm('Yakin ingin hapus wisata - {{$data->title}} ? ')" >
@@ -21,6 +21,19 @@
                         </button>
                     </form>
                 </div>
+                @if($data->is_open == 1)
+                <div class="">
+                    <a href="{{route('wisata.tutup',$data->id)}}" class="mb-3 btn btn-sm btn-secondary" onClick="return confirm('Yakin ingin tutup wisata - {{$data->title}} ? ')">
+                        Tutup Wisata
+                    </a>
+                </div>
+                @else
+                <div class="">
+                    <a href="{{route('wisata.buka',$data->id)}}" class="mb-3 btn btn-sm btn-info" onClick="return confirm('Yakin ingin buka wisata - {{$data->title}} ? ')">
+                        Buka Wisata
+                    </a>
+                </div>
+                @endif
             </div>
             <div class="row mb-2 mt-2">
                 <div class="col-12">

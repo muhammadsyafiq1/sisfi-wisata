@@ -46,27 +46,59 @@
                     <h5 class="mb-3">
                         Wisata baru didaftarkan
                     </h5>
-                    <a href="/dashboard-transaction-details.html" class="card card-list d-block">
+                    @foreach($tours as $tour)
+                        @if(Auth::user()->role  == 'admin' )
+                        <a href="{{route('wisata.show',$tour->id)}}" class="card card-list d-block">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-1">
-                                    <img src="/backend/images/dashboard-icon-product-1.png">
+                                    <img src="{{Storage::url($tour->gallery->first()->foto)}}" class="w-100">
                                 </div>
                                 <div class="col-md-4">
-                                    Sungai hijau
+                                    {{$tour->title}}
                                 </div>
                                 <div class="col-md-3">
-                                    Ridan
+                                    {{$tour->kota}}
                                 </div>
                                 <div class="col-md-3">
-                                    12 januari, 2020
+                                {{\Carbon\Carbon::createFromTimeStamp(strtotime($tour->created_at))->diffForHumans()}}
                                 </div>
                                 <div class="col-md-1 d-none d-md-block">
-                                    <img src="/backend/images/dashboard-arrow-right.svg">
+                                    <!-- <a href="{{route('wisata.show',$tour->id)}}"> -->
+
+                                        <img src="/backend/images/dashboard-arrow-right.svg">
+                                    <!-- </a> -->
                                 </div>
                             </div>
                         </div>
                     </a>
+                    @else
+                    <a href="" class="card card-list d-block">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1">
+                                    <img src="{{Storage::url($tour->gallery->first()->foto)}}" class="w-100">
+                                </div>
+                                <div class="col-md-4">
+                                    {{$tour->title}}
+                                </div>
+                                <div class="col-md-3">
+                                    {{$tour->kota}}
+                                </div>
+                                <div class="col-md-3">
+                                {{\Carbon\Carbon::createFromTimeStamp(strtotime($tour->created_at))->diffForHumans()}}
+                                </div>
+                                <div class="col-md-1 d-none d-md-block">
+                                    <!-- <a href="{{route('wisata.show',$tour->id)}}"> -->
+
+                                        <!-- <img src="/backend/images/dashboard-arrow-right.svg"> -->
+                                    <!-- </a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    @endif
+                    @endforeach
                 </div>
             </div>
         </div>
